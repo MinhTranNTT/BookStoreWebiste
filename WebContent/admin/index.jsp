@@ -25,7 +25,7 @@
 			<a href="create_category">New Category</a> &nbsp;
 			<a href="create_customer">New Customer</a> &nbsp;
 		</b>
-	<hr width="60%">
+	
 	</div>
 	
 	

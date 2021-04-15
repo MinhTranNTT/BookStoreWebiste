@@ -73,4 +73,72 @@ public class UserServices {
 		
 		
 	}
+
+	public void editUser() throws ServletException, IOException {
+		int userId = Integer.parseInt(request.getParameter("id"));
+		Users users = usersDAO.get(userId);
+		
+		String destPage = "user_form.jsp";
+		
+		if(users == null) {
+			
+			destPage = "message.jsp"; 
+			String message = "Could not find user with " + userId;
+			
+			request.setAttribute("message", message);
+			
+		} else {
+			
+			request.setAttribute("user", users);	
+		}
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(destPage);
+		requestDispatcher.forward(request, response);
+
+	}
+
+	public void updateUser() throws ServletException, IOException {
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		String email = request.getParameter("email");
+		String fullName = request.getParameter("fullname");
+		String password = request.getParameter("password");
+		
+		Users userById = usersDAO.get(userId);
+		Users userByEmail = usersDAO.findByEmail(email);
+		
+		if (userById != null && userByEmail.getUserId() != userById.getUserId()) {
+			String message = "Cound not update user. User with email " + email + " already exists.";
+			request.setAttribute("message", message);
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("message.jsp");
+			requestDispatcher.forward(request, response);
+		} else {
+			Users user = new Users(userId, email, fullName, password);
+			usersDAO.update(user);
+			
+			String message = "User has been update successfully";
+			listUser(message);
+		}	
+		
+	}
+
+	public void deleteUser() throws ServletException, IOException {
+		int userId = Integer.parseInt(request.getParameter("id"));
+		Users user = usersDAO.get(userId);
+		String message = "You has been delete successfully";
+		
+		if (user == null) {
+			
+			message = "Cound not delete user. User with ID " + userId + " has been remove.";
+			request.setAttribute("message", message);
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("message.jsp");
+			requestDispatcher.forward(request, response);
+		} else {
+			
+			usersDAO.delete(userId);
+			listUser(message);
+		}
+		
+		
+	}
 }

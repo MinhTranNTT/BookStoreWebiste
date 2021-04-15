@@ -31,6 +31,11 @@ public class Users {
 		this.fullName = fullName;
 		this.password = password;
 	}
+	
+	public Users(Integer userId, String email, String fullName, String password) {
+		this(email, fullName, password);
+		this.userId = userId;
+	}
 
 	@Column(name = "user_id")
 	@Id
