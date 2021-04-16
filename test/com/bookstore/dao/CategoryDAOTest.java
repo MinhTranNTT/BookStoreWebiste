@@ -80,5 +80,23 @@ public class CategoryDAOTest extends BaseDAOTest{
 		
 		assertEquals(cate.getName(), category.getName());
 	}
+	
+	@Test
+	public void testFindByName() {
+		String nameCategory = "Python";
+		Category category = categoryDAO.findByName(nameCategory);
+		
+		assertNotNull(category);
+	}
+	
+	@Test
+	public void testFindByNameNotExist() {
+		String nameCategory = "Go Lang";
+		Category category = categoryDAO.findByName(nameCategory);
+		
+		assertNull(category);
+	}
+	
+	
 
 }

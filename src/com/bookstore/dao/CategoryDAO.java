@@ -10,7 +10,6 @@ public class CategoryDAO extends JpaDAO<Category> implements GenericDAO<Category
 
 	public CategoryDAO(EntityManager entityManager) {
 		super(entityManager);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -41,6 +40,16 @@ public class CategoryDAO extends JpaDAO<Category> implements GenericDAO<Category
 	@Override
 	public long count() {
 		return super.countWithNameQuery("Category.countAll");
+	}
+	
+	public Category findByName(String nameCategory) {
+		List<Category> listCate = super.findWithNameQuery("Category.findByName", "name", nameCategory);
+		
+		if(listCate != null && listCate.size() > 0) {
+			return listCate.get(0);
+		}
+		
+		return null;
 	}
 
 }
